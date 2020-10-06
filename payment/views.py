@@ -15,13 +15,14 @@ def payment_process(request):
     total_cost = order.get_total_cost()
 
     if request.method == 'POST':
-        # retrieve nonce
+        # retrieve nonce to generate a new transaction
         nonce = request.POST.get('payment_method_nonce', None)
         # create and submit transaction
         result = gateway.transaction.sale({
             'amount': f'{total_cost:.2f}',
             'payment_method_nonce': nonce,
             'options': {
+                # transaction automatically submitted for settlement.
                 'submit_for_settlement': True
             }
         })
