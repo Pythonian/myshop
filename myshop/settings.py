@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from django.utils.translation import gettext_lazy as _
+import braintree
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -115,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en'
 
-from django.utils.translation import gettext_lazy as _
 
 LANGUAGES = (
     ('en', _('English')),
@@ -158,11 +160,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Braintree settings
-BRAINTREE_MERCHANT_ID = ''  # Merchant ID
-BRAINTREE_PUBLIC_KEY = ''   # Public Key
-BRAINTREE_PRIVATE_KEY = ''  # Private key
+BRAINTREE_MERCHANT_ID = 'f8dw6j4ypwjfx97m'
+BRAINTREE_PUBLIC_KEY = 'cq23939zqtfsk7hj'
+BRAINTREE_PRIVATE_KEY = '446d18c7013f980f8cae3ca115cdca36'
 
-import braintree
 
 BRAINTREE_CONF = braintree.Configuration(
     braintree.Environment.Sandbox,

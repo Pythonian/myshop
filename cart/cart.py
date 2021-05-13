@@ -56,14 +56,14 @@ class Cart(object):
         params:
             product:  The product instance to add or update in the cart.
             quantity: An optional integer with the product quantity.
-            override_quantity: This is a Boolean that indicates whether the quantity
-                needs to be overridden with the given quantity (True), or whether the new
-                quantity has to be added to the existing quantity (False).
+            override_quantity: A Boolean that indicates whether the quantity
+              needs to be overridden with the given quantity (True), or if the
+              new quantity has to be added to the existing quantity (False).
         """
-        product_id = str(product.id) # Serialize to JSON
+        product_id = str(product.id)  # Serialize to JSON
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0,
-                                      'price': str(product.price)}
+                                     'price': str(product.price)}
         if override_quantity:
             self.cart[product_id]['quantity'] = quantity
         else:
@@ -90,7 +90,8 @@ class Cart(object):
 
     def get_total_price(self):
         # calculate the total costs of all items in the cart
-        return sum(Decimal(item['price']) * item['quantity'] for item in self.cart.values())
+        return sum(Decimal(item['price']) * item['quantity']
+                   for item in self.cart.values())
 
     @property
     def coupon(self):
