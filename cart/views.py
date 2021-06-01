@@ -9,6 +9,9 @@ from .forms import CartAddProductForm
 
 @require_POST
 def cart_add(request, product_id):
+    """
+    Add products to cart or update quantities of existing products
+    """
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     form = CartAddProductForm(request.POST)

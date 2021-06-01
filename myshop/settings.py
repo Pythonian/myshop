@@ -92,6 +92,15 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'myshop',
+#         'USER': 'myshopadmin',
+#         'PASSWORD': 'myshoppassword,
+#         'HOST': 'localhost'
+#     }
+# }
 
 
 # Password validation

@@ -58,7 +58,7 @@
 
         form.addEventListener('submit', function (event) {
           event.preventDefault();
-
+          // tokenizes the field using braintree SDK & processes the payment
           hostedFieldsInstance.tokenize(function (tokenizeErr, payload) {
             if (tokenizeErr) {
               console.error(tokenizeErr);

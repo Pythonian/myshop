@@ -7,6 +7,9 @@ from .forms import CouponApplyForm
 
 @require_POST
 def coupon_apply(request):
+    """
+    Validates the coupon and stores it's ID in a user's session
+    """
     now = timezone.now()
     form = CouponApplyForm(request.POST)
     if form.is_valid():

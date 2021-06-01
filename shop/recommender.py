@@ -10,11 +10,21 @@ r = redis.Redis(host=settings.REDIS_HOST,
 
 
 class Recommender(object):
+    """
+    Store product purchases and retrieve product suggestions
+    for a given product or products.
+    """
 
     def get_product_key(self, id):
+        """
+        Receives ID of a product object and builds the redis key for the
+        sorted set where related products are stored.
+        """
         return f'product:{id}:purchased_with'
 
     def products_bought(self, products):
+        # receives a list of Product objects that have been bought together
+        # get the product IDs for the given Product objects
         product_ids = [p.id for p in products]
         for product_id in product_ids:
             for with_id in product_ids:
@@ -25,6 +35,10 @@ class Recommender(object):
                               1, with_id)
 
     def suggest_products_for(self, products, max_results=6):
+        """
+        retrieve the products that were bought together for a list
+        of given products
+        """
         product_ids = [p.id for p in products]
         if len(products) == 1:
             # only 1 product

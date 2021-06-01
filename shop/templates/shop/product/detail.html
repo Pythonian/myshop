@@ -17,6 +17,11 @@
       </a>
     </h2>
     <p class="price">${{ product.price }}</p>
+   {% if product.available %}
+      <p>Available</p>
+    {% else %}
+      <p>Out of Stock</p>
+    {% endif %}
     <form action="{% url "cart:cart_add" product.id %}" method="post">
       {{ cart_product_form }}
       {% csrf_token %}

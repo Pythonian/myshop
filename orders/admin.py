@@ -13,12 +13,19 @@ class OrderItemInline(admin.TabularInline):
 
 
 def export_to_csv(modeladmin, request, queryset):
+    """
+    custom administration action to download a list of orders as a CSV file
+    """
     opts = modeladmin.model._meta
     content_disposition = f'attachment; filename={opts.verbose_name}.csv'
+    # tells browser to treat response as csv file
     response = HttpResponse(content_type='text/csv')
+    # indicates the response has an attached file
     response['Content-Disposition'] = content_disposition
+    # create a CSV writer object that will write to the response object
     writer = csv.writer(response)
 
+    # get the model fields dynamically & exclude relationships
     fields = [field for field in opts.get_fields()
               if not field.many_to_many and not field.one_to_many]
     # Write a first row with header information
@@ -29,6 +36,7 @@ def export_to_csv(modeladmin, request, queryset):
         for field in fields:
             value = getattr(obj, field.name)
             if isinstance(value, datetime.datetime):
+                # format datetime objects to string
                 value = value.strftime('%d/%m/%Y')
             data_row.append(value)
         writer.writerow(data_row)
@@ -39,20 +47,26 @@ export_to_csv.short_description = 'Export to CSV'
 
 
 def order_detail(obj):
+    """
+    Add a link to each Order object in the admin list_display page
+    """
     url = reverse('orders:admin_order_detail', args=[obj.id])
     return mark_safe(f'<a href="{url}">View</a>')
 
-# def order_pdf(obj):
-#     url = reverse('orders:admin_order_pdf', args=[obj.id])
-#     return mark_safe(f'<a href="{url}">PDF</a>')
-# order_pdf.short_description = 'Invoice'
+
+def order_pdf(obj):
+    url = reverse('orders:admin_order_pdf', args=[obj.id])
+    return mark_safe(f'<a href="{url}">PDF</a>')
+
+
+order_pdf.short_description = 'Invoice'
 
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ['id', 'first_name', 'last_name', 'email',
                     'address', 'postal_code', 'city', 'paid',
-                    'created', 'updated', order_detail]  # order_pdf]
+                    'created', order_detail, order_pdf]
     list_filter = ['paid', 'created', 'updated']
     inlines = [OrderItemInline]
     actions = [export_to_csv]

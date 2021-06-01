@@ -13,7 +13,7 @@ class Cart(object):
         """
         # store the current session
         self.session = request.session
-        # try to get the cart from th current user session
+        # try to get the cart from the current user session
         cart = self.session.get(settings.CART_SESSION_ID)
         if not cart:
             # save an empty cart in the session
@@ -45,9 +45,9 @@ class Cart(object):
 
     def __len__(self):
         """
-        Count all items in the cart.
+        Return the total number of items in the cart.
         """
-        # reeturn the sum of  the quantities of all items in thee cart
+        # return the sum of the quantities of all items in the cart
         return sum(item['quantity'] for item in self.cart.values())
 
     def add(self, product, quantity=1, override_quantity=False):

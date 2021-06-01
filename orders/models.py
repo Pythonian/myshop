@@ -23,6 +23,7 @@ class Order(models.Model):
                                null=True,
                                blank=True,
                                on_delete=models.SET_NULL)
+    # preserve discount if coupon is modified or deleted
     discount = models.IntegerField(default=0,
                                    validators=[MinValueValidator(0),
                                                MaxValueValidator(100)])
