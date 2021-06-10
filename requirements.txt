@@ -13,7 +13,7 @@ click-didyoumean==0.0.3
 click-repl==0.1.6
 cssselect2==0.3.0
 defusedxml==0.6.0
-Django==3.1.1
+Django==3.1.12
 django-localflavor==3.0.1
 django-parler==2.2
 django-rosetta==0.9.5
